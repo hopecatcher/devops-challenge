@@ -1,12 +1,12 @@
 # DevOps Challenge
 
-Dockerize and Deploy a sample ruby on rails application With Redis, Postgress, Unicorn and Sidekiq using Kubernates
+Dockerize and Deploy a sample ruby on rails application With Redis, Postgress, Unicorn and Sidekiq using Kubernates.
 
 ## Prerequisites
 
-Follow The Blog in https://semaphoreci.com/community/tutorials/dockerizing-a-ruby-on-rails-application to dockerize the application using a docker-compose file
+Follow The Blog in https://semaphoreci.com/community/tutorials/dockerizing-a-ruby-on-rails-application to dockerize the application using a docker-compose file.
 
-Install kubectl, minikube and kompose to run and deploy the application in Kubernates as below
+Install kubectl, minikube and kompose to run and deploy the application in Kubernates as below.
 
 ```
 $curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin/kubectl
@@ -42,9 +42,16 @@ $docker push  mennatallahshaaban/drkiq:1.3
 
 #### Note
 
-Please note that the tag of the image must be created with the username which is used to login in dockerhub
+Please note that the tag of the image must be created with the username which is used to login in dockerhub.
 
-### Modify docker-compose.yml to be able to run it with no need to create volume before or intialize the database with "docker-compose run <command>" as attached in the repo and test it with "$docker-compose up" everything should be working in the application then run the below command to convert it to kubernates yml files
+### Modify docker-compose.yml 
+To be able to run it with no need to create volume before or intialize the database with "docker-compose run <command>" it can be modified as attached in the repo and test it with "$docker-compose up" everything should be working in the application.
+
+#### Note
+
+As it is not supported to mount a directory on the host to the container without adapter like awsElasticBlockStore or azureDisk, The volume of drkiq and sidekiq apps are hashed in the docker-compose.yaml file.
+
+Then run the below command to convert it to kubernates yml files.
 
 ```
 $kompose convert
@@ -73,7 +80,7 @@ $curl -v http://localhost:8000
 ```
 
 #### Note
-The application may take few minutes to be up
+The application may take few minutes to be up.
 
 ## Use another way to pass environment variables to the application containers in kubernates
 There is different ways to pass variables to the containers as below:
@@ -118,7 +125,7 @@ Here we will use ConfigMap by applying the below:
 $kubectl create configmap app-config --from-literal=SECRET_TOKEN=asecuretokenwouldnormallygohere
 ```
 
-#### Edit The config map to add the rest of the variable by running 
+#### Edit The config map to add the rest of the variable by running: 
 
 ```
 $kubectl edit configmap app-config
@@ -214,7 +221,7 @@ $kubectl replace -f sidekiq-deployment.yaml
 ```
 
 #### Note
-We can always validate the work by testing the application from the browser and to get the info about resources run
+We can always validate the work by testing the application from the browser and to get the info about resources run.
 
 ```
 kubectl get  deployment,svc,pods,pvc
