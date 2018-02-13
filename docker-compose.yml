@@ -29,8 +29,8 @@ services:
 #      - drkiq:/drkiq
     ports:
       - '8000:8000'
-#    env_file:
-#      - ./drkiq/.drkiq.env
+    env_file:
+      - ./drkiq/.drkiq.env
     command: bash -c "rake db:reset && rake db:migrate && bundle exec unicorn -c config/unicorn.rb"
 
   sidekiq:
@@ -42,8 +42,8 @@ services:
       - redis
 #    volumes:
 #      - drkiq-sidekiq:/drkiq
-#    env_file:
-#      - ./drkiq/.drkiq.env
+    env_file:
+      - ./drkiq/.drkiq.env
 
 volumes:
   drkiq-postgres:

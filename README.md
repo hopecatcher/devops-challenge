@@ -27,18 +27,18 @@ $curl -L https://github.com/kubernetes/kompose/releases/download/v1.1.0/kompose-
 Regarding The above blog after creating Dockerfile the docker image will be created and pushed to dockerhub to be used by kubernates
 
 ```
-$docker build -t  mennatallahshaaban/drkiq:1.1 .
+$docker build -t  mennatallahshaaban/drkiq:1.3 .
 ```
 
 ```
-$docker push  mennatallahshaaban/drkiq:1.1
+$docker push  mennatallahshaaban/drkiq:1.3
 ```
 
 #### Note
 
 Please note that the tag of the image must be created with the username which is used to login in dockerhub
 
-### Modify docker-compose.yml to be able to run it with no need to create volume before or intialize the data base with "docker-compose run" as attached in the repo and test it with "$docker-compose up" everything should be working in the application then run the below command to convert it to kubernates yml files
+### Modify docker-compose.yml to be able to run it with no need to create volume before or intialize the database with "docker-compose run <command>" as attached in the repo and test it with "$docker-compose up" everything should be working in the application then run the below command to convert it to kubernates yml files
 
 ```
 $kompose convert
@@ -102,9 +102,9 @@ To Validate that it works let's run the containers with "$kubectl create -f <yml
 
 ### Use ConfigMaps and Secrets to make the variables isolated from the applications so no need to rebuild the containers when variables need to be changed and also not to duplicate variables if they are needed for multiple containers.
 
-The difference between Secretes and ConfigMaps is that Secrets is Used for confidential data by using base64 encoding and ConfigMap is used for normaldata.
+The difference between Secretes and ConfigMaps is that Secrets is Used for confidential data by using base64 encoding and ConfigMap is used for normal data.
 
-Here We can Use ConfigMap as it is only practicing by applying the below:
+Here we will use ConfigMap by applying the below:
 
 #### Create configMap and pass a variable to it by running:
 
@@ -208,7 +208,11 @@ $kubectl replace -f sidekiq-deployment.yaml
 ```
 
 #### Note
-We can always validate the work by testing the application from the browser.
+We can always validate the work by testing the application from the browser and to get the info about resources run
+
+```
+kubectl get  deployment,svc,pods,pvc
+```
 
 ## Author
 
