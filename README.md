@@ -49,7 +49,7 @@ To be able to run it with no need to create volume before or intialize the datab
 
 #### Note
 
-As it is not supported to mount a directory on the host to the container without adapter like awsElasticBlockStore or azureDisk, The volume of drkiq and sidekiq apps are hashed in the docker-compose.yaml file.
+As it is not supported to mount a directory on the host to the container without adapter like awsElasticBlockStore in AWS or azureDisk in AZURE, The volume of drkiq and sidekiq apps are hashed in the docker-compose.yaml file.
 
 Then run the below command to convert it to kubernates yml files.
 
