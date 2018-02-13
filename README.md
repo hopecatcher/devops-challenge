@@ -20,6 +20,12 @@ $curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.25.0/mini
 $curl -L https://github.com/kubernetes/kompose/releases/download/v1.1.0/kompose-linux-amd64 -o kompose && chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin/
 ```
 
+Start Minikube
+
+```
+$minikube start
+```
+
 ## Getting Started
 
 ### Build and Push Docker Image
