@@ -1,0 +1,62 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.1.0 (36652f6)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: sidekiq
+  name: sidekiq
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: sidekiq
+    spec:
+      containers:
+      - args:
+        - bundle
+        - exec
+        - sidekiq
+        - -C
+        - config/sidekiq.yml
+        env:
+        - name: CACHE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: CACHE_URL
+        - name: DATABASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DATABASE_URL
+        - name: JOB_WORKER_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: JOB_WORKER_URL
+        - name: LISTEN_ON
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: LISTEN_ON
+        - name: SECRET_TOKEN
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: SECRET_TOKEN
+        - name: WORKER_PROCESSES
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: WORKER_PROCESSES
+        image: mennatallahshaaban/drkiq:1.3
+        name: sidekiq
+        resources: {}
+      restartPolicy: Always
+status: {}

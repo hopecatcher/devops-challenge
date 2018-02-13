@@ -1,0 +1,52 @@
+version: '2'
+services:
+  postgres:
+    image: postgres:9.4.5
+    container_name: postgres
+    environment:
+      POSTGRES_USER: drkiq
+      POSTGRES_PASSWORD: yourpassword
+    ports:
+      - '5432:5432'
+    volumes:
+      - drkiq-postgres:/var/lib/postgresql/data
+
+  redis:
+    image: redis:3.0.5
+    container_name: redis
+    ports:
+      - '6379:6379'
+    volumes:
+      - drkiq-redis:/var/lib/redis/data
+
+  drkiq:
+    image: mennatallahshaaban/drkiq:1.3
+    container_name: drkiq
+    links:
+      - postgres
+      - redis
+#    volumes:
+#      - drkiq:/drkiq
+    ports:
+      - '8000:8000'
+#    env_file:
+#      - ./drkiq/.drkiq.env
+    command: bash -c "rake db:reset && rake db:migrate && bundle exec unicorn -c config/unicorn.rb"
+
+  sidekiq:
+    image: mennatallahshaaban/drkiq:1.3
+    container_name: sidekiq
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    links:
+      - postgres
+      - redis
+#    volumes:
+#      - drkiq-sidekiq:/drkiq
+#    env_file:
+#      - ./drkiq/.drkiq.env
+
+volumes:
+  drkiq-postgres:
+  drkiq-redis:
+#  drkiq:
+#  drkiq-sidekiq:
